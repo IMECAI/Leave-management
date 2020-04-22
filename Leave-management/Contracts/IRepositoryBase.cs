@@ -11,6 +11,7 @@ namespace Leave_management.Contracts
         //Accepting any type of array objects passed in, T is a generic class
         ICollection<T> FindAll();// a Function to get all record class types i am looking for
         T FindById(int id);
+        bool isExists(int id);
         bool Create(T entity);
         bool Update(T entity);
         bool Delete(T entity);

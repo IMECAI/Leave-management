@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace Leave_management.Models
 {
-    public class DetailsLeaveTypeViewModel
+    public class LeaveTypeViewModel
     {
-        
+        //view model is a display only to the user; however i can set the view up how i like
         public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime DateCreated { get; set; }
-    }
-    public class CreateLeaveTypeViewModel
-    {
         [Required]
         public string Name { get; set; }
+        [Display(Name = "Date Created")]//Puts a space between Date Created on the view page
+        public DateTime? DateCreated { get; set; }
     }
 }
+ 
