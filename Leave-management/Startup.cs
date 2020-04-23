@@ -34,6 +34,7 @@ namespace Leave_management
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 
             //Add references for repository and contracts to startup file
             services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
