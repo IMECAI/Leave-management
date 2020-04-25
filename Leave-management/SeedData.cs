@@ -27,7 +27,7 @@ namespace Leave_management
                     UserName = "admin",
                     Email = "admin@localhost"
                 };
-                var result = userManager.CreateAsync(user, "password").Result;
+                var result = userManager.CreateAsync(user, "P@ssword1").Result;
                 //Was the results successful or not
                 if (result.Succeeded)
                 {
@@ -53,7 +53,7 @@ namespace Leave_management
             {
                 var role = new IdentityRole
                 {
-                    Name = "Administrator"
+                    Name = "Employee"
                 };
                 roleManager.CreateAsync(role);
             }
