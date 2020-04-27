@@ -10,8 +10,11 @@ namespace Leave_management.Data
     {
         [Key] // This is the primary key generated for this table
         public int Id { get; set; }
+
         [Required] // The property can't be null 
         public string Name { get; set; }
+        public int DefaultDays { get; set; }
         public DateTime DateCreated { get; set; }
     }
+    
 }

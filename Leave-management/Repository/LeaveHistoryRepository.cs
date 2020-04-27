@@ -43,7 +43,7 @@ namespace Leave_management.Repository
 
         public bool isExists(int id)
         {
-            var exists = _db.LeaveHistories.Any(q => q.Id == id);//lambda expression
+            var exists = _db.LeaveHistories.Any(q => q.Id == id);
             return exists;
         }
 
