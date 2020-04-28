@@ -17,14 +17,17 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.LeaveTypes)
+@foreach (var item in Model.LeaveTypes) 
 {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
+
             <td>
-                @Html.ActionLink("Allocate To Employees", "SetLeave", new { id = item.Id }) 
+                <a class="btn btn-outline-success" asp-action="SetLeave" asp-route-id="@item.Id"> 
+                    <i class="fa fa-pencil"></i> Allocate To Employees
+                </a>
             </td>
         </tr>
 }

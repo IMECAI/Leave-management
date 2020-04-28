@@ -1,4 +1,4 @@
-﻿//Script for our Leave Type layout
+﻿//Script for the table layout on the view layout
 $(document).ready(function () {
     $('#tblData').DataTable();
 });
