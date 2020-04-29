@@ -35,7 +35,8 @@ namespace Leave_management.Models
         [Display(Name = "Number Of Days")]
         public int NumberofDays { get; set; }
         public LeaveTypeViewModel LeaveType { get; set; }
-      
+        public string EmployeeId { get; set; }
+
     }
     public class ViewAllocationViewmodel
     {

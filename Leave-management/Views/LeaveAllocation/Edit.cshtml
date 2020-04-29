@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Editing @Model.LeaveType.Name Allocation for @Model.Employee.Lastname, Firstname</h1>
+<h1>Editing @Model.LeaveType.Name Allocation for @Model.Employee.Lastname, @Model.Employee.Firstname</h1>
 
 <hr />
 <div class="row">
@@ -13,6 +13,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="EmployeeId" />
             <div class="form-group">
                 <label asp-for="NumberofDays" class="control-label"></label>
                 <input asp-for="NumberofDays" class="form-control" />

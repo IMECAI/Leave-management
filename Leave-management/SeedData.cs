@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Leave_management
 {
     public static class SeedData
-    {
+    {//Information to be passed to the database
         public static void Seed(UserManager<Employee> userManager,
             RoleManager<IdentityRole> roleManager)
         {
@@ -28,7 +28,7 @@ namespace Leave_management
                     UserName = "admin@host.com",
                     Email = "admin@host.com"
                 };
-                var result = userManager.CreateAsync(user, "P@ssword1").Result;
+                var result = userManager.CreateAsync(user, "P@ssword2").Result;
                 //Was the results successful or not
                 if (result.Succeeded)
                 {

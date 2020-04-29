@@ -130,16 +130,27 @@ namespace Leave_management.Controllers
         // POST: LeaveAllocation/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(EditLeaveAllocationViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                var record = _leaveallocationrepo.FindById(model.Id);
+                record.NumberofDays = model.NumberofDays;
+                var isSuccess = _leaveallocationrepo.Update(record);
+                if (!isSuccess)//If their was not a successful update:
+                {
+                    ModelState.AddModelError("", "Save Error");
+                    return View(model);
+                }
+                return RedirectToAction(nameof(Details),new {id = model.EmployeeId  });
             }
             catch
             {
+                ModelState.AddModelError("", "Something went wrong...");
                 return View();
             }
         }
