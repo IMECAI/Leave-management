@@ -60,8 +60,8 @@ namespace Leave_management.Repository
 
         public bool Save()
         {
-            _db.SaveChanges();
-            return Save();
+            var changes = _db.SaveChanges();
+            return changes > 0;
         }
 
         public bool Update(LeaveRequest entity)

@@ -24,7 +24,7 @@ namespace Leave_management.Data
 
         public int LeaveTypeId { get; set; }
         public DateTime DateRequested { get; set; }
-        public DateTime DateActioned { get; set; }
+        public DateTime? DateActioned { get; set; }//nullable
         public bool? Approved { get; set; } //can be put in with a null state, as pending(?)
 
         [ForeignKey("ApprovedById")]

@@ -10,25 +10,36 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Leave_management.Controllers
 {
     [Authorize]
     public class LeaveRequestController : Controller
     {
-        private readonly ILeaveRequestRepository _leaveRequestRepo;
-        private readonly IMapper _mapper;
-        private readonly UserManager<Employee> _userManager;
+        //dependencies
+        private readonly ILeaveRequestRepository    _leaveRequestRepo;
+        private readonly ILeaveTypeRepository       _leaveTypeRepo;
+        private readonly ILeaveAllocationRepository _leaveAllocationRepo;
+        private readonly IMapper                    _mapper;
+        private readonly UserManager<Employee>      _userManager;
+        
 
+        //Controller
         public LeaveRequestController(
             ILeaveRequestRepository leaveRequestRepo,
-            IMapper mapper,
-            UserManager<Employee> userManager
+            ILeaveTypeRepository    leaveTypeRepo,
+            ILeaveAllocationRepository leaveAllocationRepo,
+            IMapper                 mapper,
+            UserManager<Employee>   userManager
         )
         {
-            _leaveRequestRepo = leaveRequestRepo;
-            _mapper = mapper;
-            _userManager = userManager;
+            //Initialize
+            _leaveRequestRepo    = leaveRequestRepo;
+            _leaveTypeRepo       = leaveTypeRepo;
+            _leaveAllocationRepo = leaveAllocationRepo;
+            _mapper              = mapper;
+            _userManager         = userManager;
         }
 
         [Authorize(Roles = "Administrator")]
@@ -58,23 +69,86 @@ namespace Leave_management.Controllers
         // GET: LeaveRequest/Create
         public ActionResult Create()
         {
-            return View();
+            //Retrieving leavetype list from the database
+            var leaveTypes     = _leaveTypeRepo.FindAll();
+            var leaveTypeItems = leaveTypes.Select(q => new SelectListItem
+            {
+                Text  = q.Name,
+                Value = q.Id.ToString()
+            });
+            //pass the data into the form
+            var model = new CreateLeaveRequestVM
+            {
+                LeaveTypes = leaveTypeItems
+            };
+            //right-click view: add view
+            return View(model);
         }
 
         // POST: LeaveRequest/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
+        public ActionResult Create(CreateLeaveRequestVM model)
+        {    
             try
             {
-                // TODO: Add insert logic here
+                var startDate = Convert.ToDateTime(model.StartDate);
+                var endDate   = Convert.ToDateTime(model.EndDate);
 
-                return RedirectToAction(nameof(Index));
-            }
+                //Retrieve leavetype list from the database
+                var leaveTypes     = _leaveTypeRepo.FindAll();
+                var leaveTypeItems = leaveTypes.Select(q => new SelectListItem         
+                {
+                    Text  = q.Name,
+                    Value = q.Id.ToString()
+                });
+                model.LeaveTypes = leaveTypeItems;
+
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                if (DateTime.Compare(startDate, endDate) > 1) // validation to compare the startDate with EndDate, eliminates user putting garbage into the system
+                {
+                    ModelState.AddModelError("", "Error...Start date can't be further than End date");
+                    return View(model);
+                }
+               
+                var employee      = _userManager.GetUserAsync(User).Result; // retrieve the employee 
+                var allocation    = _leaveAllocationRepo.GetLeaveAllocationsByEmployeeAndType(employee.Id, model.LeaveTypeId); //retrieve the allocations that the employee has 
+                int daysRequested = (int)(endDate - startDate).TotalDays;
+
+                if (daysRequested > allocation.NumberofDays)
+                {
+                    ModelState.AddModelError("", "Error...Not enough days to process request");
+                    return View(model);
+                }
+
+                var leaveRequestModel = new LeaveRequestViewModel
+                {
+                    RequestingEmployeeId = employee.Id,
+                    StartDate            = startDate,
+                    EndDate              = endDate,
+                    DateRequested        = DateTime.Now,
+                    DateActioned         = DateTime.Now,
+                    LeaveTypeId          = model.LeaveTypeId
+                };
+
+                var leaveRequest = _mapper.Map<LeaveRequest>(leaveRequestModel);
+                var isSuccess    = _leaveRequestRepo.Create (leaveRequest);
+
+                if (!isSuccess)
+                {
+                    ModelState.AddModelError("", "Submission Error...Contact Your Admininstrator");
+                    return View(model);
+                }
+                return RedirectToAction(nameof(Index),"Home");
+            }        
             catch
-            {
-                return View();
+            {               
+                ModelState.AddModelError("", "Error...");
+                return View(model);
             }
         }
 
