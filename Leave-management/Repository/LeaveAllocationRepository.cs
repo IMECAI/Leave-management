@@ -55,27 +55,19 @@ namespace Leave_management.Repository
             return LeaveAllocation;
         }
 
-        public ICollection<LeaveAllocation> GetEmployeesByLeaveAllocation(string id)
+        public ICollection<LeaveAllocation> GetLeaveAllocationsByEmployee(string employeeid)
         {
             var period = DateTime.Now.Year;
             return FindAll()
-                    .Where(q => q.EmployeeId == id && q.Period == period)
-                    .ToList();
-        }
-
-        public ICollection<LeaveAllocation> GetLeaveAllocationsByEmployee(string id)
-        {
-            var period = DateTime.Now.Year;
-            return FindAll()
-                .Where(q => q.EmployeeId == id && q.Period == period)
+                .Where(q => q.EmployeeId == employeeid && q.Period == period)
                 .ToList();
         }
 
-        public LeaveAllocation GetLeaveAllocationsByEmployeeAndType(string id, int leavetypeid)
+        public LeaveAllocation GetLeaveAllocationsByEmployeeAndType(string employeeid, int leavetypeid)
         {
             var period = DateTime.Now.Year;
             return FindAll()
-                    .FirstOrDefault(q => q.EmployeeId == id && q.Period == period && q.LeaveTypeId == leavetypeid);//Brings back an object when it meets the condition or it returns null           
+                    .FirstOrDefault(q => q.EmployeeId == employeeid && q.Period == period && q.LeaveTypeId == leavetypeid);//Brings back an object when it meets the condition or it returns null           
         }
 
         public bool isExists(int id)

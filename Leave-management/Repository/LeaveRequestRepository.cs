@@ -29,22 +29,22 @@ namespace Leave_management.Repository
 
         public ICollection<LeaveRequest> FindAll()
         {
-            var LeaveHistory = _db.LeaveRequests
+            var LeaveRequest = _db.LeaveRequests
                 .Include(q => q.RequestingEmployee)
                 .Include(q => q.ApprovedBy)
                 .Include(q => q.LeaveType)
                 .ToList();
-            return LeaveHistory;
+            return LeaveRequest;
         }
 
         public LeaveRequest FindById(int id)
         {
-            var LeaveHistory = _db.LeaveRequests
+            var LeaveRequest = _db.LeaveRequests
                .Include(q => q.RequestingEmployee)
                .Include(q => q.ApprovedBy)
                .Include(q => q.LeaveType)
                .FirstOrDefault(q => q.Id == id);
-            return LeaveHistory;
+            return LeaveRequest;
         }
 
         public ICollection<LeaveRequest> GetEmployeesByLeaveHistory(int id)
