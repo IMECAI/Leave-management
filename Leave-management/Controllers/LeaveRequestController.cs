@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Leave_management.Contracts;
 using Leave_management.Data;
+using Leave_management.Models;
 using Leave_management.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +57,24 @@ namespace Leave_management.Controllers
                 PendingRequests  = leaveRequestModel.Count(q => q.Approved == null ),
                 RejectedRequests = leaveRequestModel.Count(q => q.Approved == false),
                 LeaveRequests    = leaveRequestModel
+            };
+            return View(model);
+        }
+
+        public ActionResult MyLeave()
+        {
+            var employee = _userManager.GetUserAsync(User).Result;
+            var employeeid = employee.Id;
+            var employeeAllocations = _leaveAllocationRepo.GetLeaveAllocationsByEmployee(employeeid);
+            var employeeRequests = _leaveRequestRepo.GetLeaveRequestByEmployee(employeeid);
+
+            var employeeAllocationsModel = _mapper.Map<List<LeaveAllocationViewModel>>(employeeAllocations);
+            var employeeRequestsModel    = _mapper.Map <List< LeaveRequestViewModel>> (employeeRequests);
+
+            var model = new EmployeeLeaveRequestViewVM
+            {
+                LeaveAllocations = employeeAllocationsModel,
+                LeaveRequests   = employeeRequestsModel
             };
             return View(model);
         }

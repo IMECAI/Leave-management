@@ -67,16 +67,16 @@
 <div class="card" style="width: 18rem;">
     <ul class="list-group list-group-flush">
         @foreach (var item in Model.LeaveAllocations)
-        {
+         {
             <li class="list-group-item">
                 <h6>@item.LeaveType.Name 
                 <span class="badge badge-secondary">@item.NumberofDays</span>      |
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa fa-pencil"></i> Edit</a> </h6>
             </li>
-        }
+         }
     </ul>
 </div>
 
 <div>
-    <a asp-action="ListEmployees">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>

@@ -25,6 +25,7 @@ namespace Leave_management.ViewModels
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
+        [Display(Name ="Leave Type")]
         public LeaveTypeViewModel LeaveType { get; set; }
         public int LeaveTypeId { get; set; }
         public DateTime DateRequested { get; set; }
@@ -32,6 +33,11 @@ namespace Leave_management.ViewModels
         public bool? Approved { get; set; } //? can be put in with a null state, waiting
         public EmployeeViewModel ApprovedBy { get; set; }
         public string ApprovedById { get; set; }
+        [Display(Name = "Request Comments")]
+        public bool Cancelled { get; set; }
+        [Display(Name = "Employee Comments")]
+        [MaxLength(300)]
+        public string RequestComments { get; set; }
     }
 
     public class AdminLeaveRequestViewVM
@@ -49,6 +55,7 @@ namespace Leave_management.ViewModels
         public int RejectedRequests { get; set; }
 
         public List<LeaveRequestViewModel> LeaveRequests { get; set; }
+      
     }
     public class CreateLeaveRequestVM
     {
@@ -66,4 +73,10 @@ namespace Leave_management.ViewModels
         [Display(Name = "Leave Type")]
         public int LeaveTypeId { get; set; }
     }
+    public class EmployeeLeaveRequestViewVM
+    {
+        public List<LeaveAllocationViewModel> LeaveAllocations { get; set; }
+        public List<LeaveRequestViewModel> LeaveRequests { get; set; }
+    }
+                
 }

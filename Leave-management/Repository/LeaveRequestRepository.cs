@@ -11,6 +11,7 @@ namespace Leave_management.Repository
     public class LeaveRequestRepository : ILeaveRequestRepository
     {
         private readonly ApplicationDbContext _db;
+
         public LeaveRequestRepository(ApplicationDbContext db)
         {
             _db = db;
@@ -50,6 +51,25 @@ namespace Leave_management.Repository
         public ICollection<LeaveRequest> GetEmployeesByLeaveHistory(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public ICollection<LeaveRequest> GetLeaveRequestByEmployee(string employeeid)
+        {
+            var leaveRequests = FindAll()
+                .Where(q => q.RequestingEmployeeId == employeeid)
+                .ToList();
+            return leaveRequests;
+        }
+
+        public ICollection<LeaveRequest> GetLeaveRequestsByEmployee(string employeeid)
+        {
+            var leaveRequests = _db.LeaveRequests
+                .Include(q => q.RequestingEmployee)
+                .Include(q => q.ApprovedBy)
+                .Include(q => q.LeaveType)
+                .Where  (q => q.RequestingEmployeeId == employeeid)
+                .ToList();
+            return leaveRequests;
         }
 
         public bool isExists(int id)
