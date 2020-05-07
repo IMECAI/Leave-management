@@ -1,10 +1,9 @@
 ﻿@model Leave_management.Models.ViewAllocationViewmodel
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <h1>Details For: @Model.Employee.Lastname, @Model.Employee.Lastname</h1> 
+<h1>Details For: @Model.Employee.Lastname, @Model.Employee.Lastname</h1>
 
 <div>
     <hr />
@@ -67,16 +66,19 @@
 <div class="card" style="width: 18rem;">
     <ul class="list-group list-group-flush">
         @foreach (var item in Model.LeaveAllocations)
-         {
+        {
             <li class="list-group-item">
-                <h6>@item.LeaveType.Name 
-                <span class="badge badge-secondary">@item.NumberofDays</span>      |
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa fa-pencil"></i> Edit</a> </h6>
+                <h6>
+                    @item.LeaveType.Name
+                    <span class="badge badge-secondary">@item.NumberofDays</span>      |
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="fa fa-pencil"></i> Edit</a>
+                </h6>
             </li>
-         }
+        }
     </ul>
 </div>
+<br />
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-outline-secondary" asp-action="ListEmployees"><i class="fa fa-arrow-left"></i> Back To List</a>
 </div>

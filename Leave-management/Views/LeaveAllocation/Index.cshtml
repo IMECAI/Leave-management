@@ -2,34 +2,33 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Employee Leave Allocation</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-               Leave Types
+                Leave Types
             </th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.LeaveTypes) 
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
+        @foreach (var item in Model.LeaveTypes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
 
-            <td>
-                <a class="btn btn-outline-success" asp-action="SetLeave" asp-route-id="@item.Id"> 
-                    <i class="fa fa-pencil"></i> Allocate To Employees
-                </a>
-            </td>
-        </tr>
-}
+                <td>
+                    <a class="btn btn-outline-success" asp-action="SetLeave" asp-route-id="@item.Id"><i class="fas fa-user-edit"></i> Allocate To Employees
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+

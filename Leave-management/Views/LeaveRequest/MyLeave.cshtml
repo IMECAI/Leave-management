@@ -1,11 +1,10 @@
 ﻿@model Leave_management.ViewModels.EmployeeLeaveRequestViewVM
-
-
-@{
+@{ 
     ViewData["Title"] = "MyLeave";
 }
 
-<h1>My Leave Allocations</h1>
+
+<h1>Leave Allocation</h1>
 <div class="jumbotron">
     <div class="card">
         <ul class="list-group list-group-flush">
@@ -19,9 +18,8 @@
     </div>
 </div>
 
-
 <hr />
-<h1>My Leave Records</h1>
+<h1>Leave Records</h1>
 <table id="tblData" class="table">
     <thead>
         <tr>
@@ -68,7 +66,7 @@
                 <td>
                     @if (item.Cancelled)
                     {
-                        <span class="badge badge-secondary">Cancelled</span>
+                        <span  class="badge badge-info">Cancelled</span>
                     }
                     else if (item.Approved == true)
                     {
@@ -87,8 +85,8 @@
                 <td>
                     @if ((!item.Cancelled && item.StartDate > DateTime.Now))
                     {
-                        <a asp-action="CancelRequest" class="btn btn-danger" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to cancel this request?')">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        <a asp-action="CancelRequest" class="btn btn-info" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to cancel this request?')">
+                            <i class="fa fa-ban fa-lg" aria-hidden="true"></i>
                         </a>
                     }
 

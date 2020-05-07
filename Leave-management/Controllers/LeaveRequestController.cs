@@ -25,7 +25,6 @@ namespace Leave_management.Controllers
         private readonly IMapper                    _mapper;
         private readonly UserManager<Employee>      _userManager;
         
-
         //Controller
         public LeaveRequestController(
             ILeaveRequestRepository leaveRequestRepo,
@@ -122,6 +121,7 @@ namespace Leave_management.Controllers
                 leaveRequest.ApprovedById = user.Id;
                 leaveRequest.DateActioned = DateTime.Now;
 
+                _leaveRequestRepo.Update(leaveRequest);
                 return RedirectToAction(nameof(Index));
            
            }
@@ -145,8 +145,7 @@ namespace Leave_management.Controllers
             var model = new CreateLeaveRequestVM
             {
                 LeaveTypes = leaveTypeItems
-            };
-            //right-click view: add view
+            };            
             return View(model);
         }
 
@@ -198,7 +197,8 @@ namespace Leave_management.Controllers
                     EndDate              = endDate,
                     DateRequested        = DateTime.Now,
                     DateActioned         = DateTime.Now,
-                    LeaveTypeId          = model.LeaveTypeId
+                    LeaveTypeId          = model.LeaveTypeId,
+                    RequestComments      = model.RequestComments
                 };
 
                 var leaveRequest = _mapper.Map<LeaveRequest>(leaveRequestModel);
@@ -209,7 +209,7 @@ namespace Leave_management.Controllers
                     ModelState.AddModelError("", "Submission Error...Contact Your Administrator");
                     return View(model);
                 }
-                return RedirectToAction(nameof(Index),"Home");
+                return RedirectToAction("MyLeave");
             }        
             catch
             {               
@@ -217,6 +217,17 @@ namespace Leave_management.Controllers
                 return View(model);
             }
         }
+
+        public ActionResult CancelRequest(int id)
+        {
+            var leaveRequest = _leaveRequestRepo.FindById(id);
+            leaveRequest.Cancelled = true;
+            _leaveRequestRepo.Update(leaveRequest);
+            return RedirectToAction("MyLeave");
+        }
+
+
+
 
         // GET: LeaveRequest/Edit/5
         public ActionResult Edit(int id)

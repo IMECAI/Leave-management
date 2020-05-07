@@ -1,4 +1,5 @@
-﻿//Script for the table layout on the view layout
+﻿//Call function script
+
 $(document).ready(function () {
     $('#tblData').DataTable();
 });

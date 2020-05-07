@@ -12,29 +12,31 @@ namespace Leave_management.ViewModels
     public class LeaveRequestViewModel
     {
         public int Id { get; set; }
-
-        [Display(Name = "Requesting Employee")]
         public EmployeeViewModel RequestingEmployee { get; set; }
-
         [Display(Name = "Employee Name")]
         public string RequestingEmployeeId { get; set; }
-
         [Display(Name = "Start Date")]
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
-
         [Display(Name = "End Date")]
+        [Required]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
-
-        [Display(Name ="Leave Type")]
         public LeaveTypeViewModel LeaveType { get; set; }
         public int LeaveTypeId { get; set; }
+
+        [Display(Name = "Date Requested")]
         public DateTime DateRequested { get; set; }
+        [Display(Name = "Date Actioned")]
         public DateTime DateActioned { get; set; }
-        public bool? Approved { get; set; } //? can be put in with a null state, waiting
+        [Display(Name = "Approval State")]
+        public bool? Approved { get; set; }
         public EmployeeViewModel ApprovedBy { get; set; }
+        [Display(Name = "Approver Name")]
         public string ApprovedById { get; set; }
-        [Display(Name = "Request Comments")]
         public bool Cancelled { get; set; }
+
         [Display(Name = "Employee Comments")]
         [MaxLength(300)]
         public string RequestComments { get; set; }
@@ -72,6 +74,10 @@ namespace Leave_management.ViewModels
 
         [Display(Name = "Leave Type")]
         public int LeaveTypeId { get; set; }
+
+        [Display(Name = "Comments")]
+        [MaxLength(300)]
+        public string RequestComments { get; set; }
     }
     public class EmployeeLeaveRequestViewVM
     {

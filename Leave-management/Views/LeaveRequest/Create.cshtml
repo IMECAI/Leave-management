@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+
 }
 
 <h1>Create</h1>
@@ -33,6 +34,15 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label asp-for="RequestComments" class="control-label"></label>
+                <textarea asp-for="RequestComments" class="form-control"></textarea>
+                <span asp-validation-for="RequestComments" class="text-danger"></span>
+            </div>
+
+
+
             <div class="form-group">
                 <input type="submit" value="Request Leave" class="btn btn-primary btn-block" />
             </div>
@@ -40,16 +50,11 @@
     </div>
 </div>
 
-<div>
-    <a class="btn btn-secondary btn-block" asp-action="Index">Back to List</a>
-</div>
-@*Script to display calender for our date picker*@
+
 @section Scripts{
-    <script>
-        $(function () {
+    <script>$(function () {
             $(".datepicker").datepicker({
                 dateFomat: "yy-mm-dd"
             });
-        });
-    </script>
+        });</script>
 }

@@ -15,7 +15,7 @@ namespace Leave_management.Models
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Default Number of Days")]
+        [Display(Name = "Number of Days")]
         [Range(1,30, ErrorMessage = "Please enter a valid number")] //The range of leave days no more than 30
         public int DefaultDays { get; set; }
 

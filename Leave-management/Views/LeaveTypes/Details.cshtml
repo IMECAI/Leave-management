@@ -2,10 +2,9 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Leave Details</h1>
 
 <div>
     <hr />
@@ -32,5 +31,6 @@
 </div>
 <div>
     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.Id"> <i class="fa fa-pencil" aria-hidden="true"></i> Edit   </a>
-    <a asp-action="Index"class="btn btn-info">Back to List</a>
+    <a class="btn btn-info" asp-action="Index"><i class="fa fa-arrow-left"></i> Back To List</a>
+  
 </div>
